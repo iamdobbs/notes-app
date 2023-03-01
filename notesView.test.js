@@ -33,7 +33,20 @@ describe('Notes view', () => {
     
 
     const noteEl = document.querySelectorAll('.note');
-    expect(noteEl.length).toBe(1);
+    expect(noteEl.length).toEqual(1);
     expect(noteEl[0].textContent).toEqual('This is a note');
+  });
+
+  it('clears existing displayed notes before displaying again with new note added', () => {
+    const model = new NotesModel();
+    const view = new NotesView(model);
+
+    model.addNote('This is note one');
+    model.addNote('This is note two');
+    view.displayNotes();
+    view.displayNotes();
+
+    const noteEl = document.querySelectorAll('.note');
+    expect(noteEl.length).toEqual(2);
   });
 })
