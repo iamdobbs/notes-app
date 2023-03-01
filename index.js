@@ -12,4 +12,4 @@ console.log(notemodel.getNotes());
 const model = new NotesModel();
 model.addNote('This is an example note')
 const view = new NotesView(model);
-view.displayNotes();
+view.displayNotes(); 

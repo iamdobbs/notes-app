@@ -11,14 +11,29 @@ describe('Notes view', () => {
     document.body.innerHTML = fs.readFileSync('./index.html');
   });
 
-  it('displays notes', () => {
+  it('displays note', () => {
     const model = new NotesModel();
     const view = new NotesView(model);
 
     model.addNote('Get Milk');
     model.addNote('Walk the dog');
-    console.log(model.notes.length)
     view.displayNotes();
     expect(document.querySelectorAll('div.note').length).toEqual(2);
+  });
+
+  it('adds note to the model when clicked', () => {
+    const model = new NotesModel();
+    const view = new NotesView(model);
+
+    const note = 'This is a note';
+    const inputEl = document.querySelector('#note-input');
+    inputEl.value = note;
+    const buttonEl = document.querySelector('#add-note-button')
+    buttonEl.click();
+    
+
+    const noteEl = document.querySelectorAll('.note');
+    expect(noteEl.length).toBe(1);
+    expect(noteEl[0].textContent).toEqual('This is a note');
   });
 })
