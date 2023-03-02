@@ -1,10 +1,11 @@
 /**
  * @jest-environment jsdom
  */
-
+require('jest-fetch-mock').enableMocks()
 const fs = require('fs');
 const NotesView = require('./notesView');
-const NotesModel = require('./notesModel')
+const NotesModel = require('./notesModel');
+const NotesClient = require('./notesClient');
 
 describe('Notes view', () => {
   beforeEach(() => {
@@ -13,7 +14,8 @@ describe('Notes view', () => {
 
   it('displays note', () => {
     const model = new NotesModel();
-    const view = new NotesView(model);
+    const client = new NotesClient();
+    const view = new NotesView(model, client);
 
     model.addNote('Get Milk');
     model.addNote('Walk the dog');
@@ -23,7 +25,8 @@ describe('Notes view', () => {
 
   it('adds note to the model when clicked', () => {
     const model = new NotesModel();
-    const view = new NotesView(model);
+    const client = new NotesClient();
+    const view = new NotesView(model, client);
 
     const note = 'This is a note';
     const inputEl = document.querySelector('#note-input');
@@ -39,7 +42,8 @@ describe('Notes view', () => {
 
   it('clears existing displayed notes before displaying again with new note added', () => {
     const model = new NotesModel();
-    const view = new NotesView(model);
+    const client = new NotesClient();
+    const view = new NotesView(model, client);
 
     model.addNote('This is note one');
     model.addNote('This is note two');
@@ -50,5 +54,16 @@ describe('Notes view', () => {
     expect(noteEl.length).toEqual(2);
   });
 
-  
+  it('fetch and display information from an API', (done) => {
+    const fakeClient = {loadNotes: (callback) => callback(['This is another mock note'])}
+    const model = new NotesModel();
+    const view = new NotesView(model, fakeClient);
+
+    
+    view.displayNotesFromApi();
+    const NoteEl = document.querySelector('.note');
+    expect(NoteEl.textContent).toEqual('This is another mock note')
+    done();
+  });
+
 })

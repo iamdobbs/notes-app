@@ -14,14 +14,14 @@ class NotesView {
     });   
   }
 
-  displayNotes () {
+  displayNotes = () => {
     document.querySelectorAll('.note').forEach(note => {
       note.remove();
     });
 
     const notes = this.model.getNotes()
 
-    notes.forEach(note => {
+    notes.forEach((note) => {
       const noteEl = document.createElement('div');
       noteEl.textContent = note;
       noteEl.className = 'note';
