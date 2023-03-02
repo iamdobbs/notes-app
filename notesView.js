@@ -29,6 +29,13 @@ class NotesView {
     });
     document.querySelector('#note-input').value = "";
   }
+
+   displayNotesFromApi = async () => {
+    await this.client.loadNotes((data) => {
+    this.model.setNotes(data);
+    this.displayNotes();
+  })
+  }
 }
 
 module.exports = NotesView;

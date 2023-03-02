@@ -49,4 +49,6 @@ describe('Notes view', () => {
     const noteEl = document.querySelectorAll('.note');
     expect(noteEl.length).toEqual(2);
   });
+
+  
 })
