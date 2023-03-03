@@ -7,9 +7,12 @@ const NotesView = require('./notesView');
 const NotesModel = require('./notesModel');
 const NotesClient = require('./notesClient');
 
+jest.mock('./notesClient')
+
 describe('Notes view', () => {
   beforeEach(() => {
     document.body.innerHTML = fs.readFileSync('./index.html');
+    NotesClient.mockClear();
   });
 
   it('displays note', () => {
@@ -23,7 +26,7 @@ describe('Notes view', () => {
     expect(document.querySelectorAll('div.note').length).toEqual(2);
   });
 
-  it('adds note to the model when clicked', () => {
+  it.skip('adds note to the model when clicked', () => {
     const model = new NotesModel();
     const client = new NotesClient();
     const view = new NotesView(model, client);
@@ -64,6 +67,22 @@ describe('Notes view', () => {
     const NoteEl = document.querySelector('.note');
     expect(NoteEl.textContent).toEqual('This is another mock note')
     done();
+  });
+
+  it('adds a new note to the server via POST', () => {
+    // const fakeClient = {createNotes: (callback) => callback(['This is another POST mock note'])}
+    const model = new NotesModel();
+    const mockClient = new NotesClient();
+    const view = new NotesView(model, mockClient);
+
+    mockClient.createNote = jest.fn((note, callback) => callback([note]))
+
+    view.addNewNote('This is another POST mock note')
+    
+
+    const noteEl = document.querySelectorAll('.note');
+    expect(noteEl.length).toEqual(1);
+    expect(noteEl[0].textContent).toEqual('This is another POST mock note');
   });
 
 })

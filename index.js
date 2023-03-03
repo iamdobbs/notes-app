@@ -18,4 +18,4 @@ const view = new NotesView(model, client);
 // const view = new NotesView(model);
 // view.displayNotes(); 
 
-view.displayNotesFromApi();
+// view.displayNotesFromApi();
