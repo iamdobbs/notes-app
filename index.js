@@ -19,3 +19,10 @@ const view = new NotesView(model, client);
 // view.displayNotes(); 
 
 // view.displayNotesFromApi();
+
+client.loadNotes((notes) => {
+  model.setNotes(notes);
+  view.displayNotes();
+  }, () => {
+  view.displayError();
+});

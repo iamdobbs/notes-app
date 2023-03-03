@@ -94,4 +94,16 @@ describe('Notes view', () => {
     expect(mainCont.textContent).toContain('Oops, something went wrong!');
   });
 
+  it('display an error message when there is an error', (done) => {
+    const fakeClient = {loadNotes: (callback) => callback(['This is another mock note'])}
+    const model = new NotesModel();
+    const view = new NotesView(model, fakeClient);
+
+    
+    view.displayNotesFromApi();
+    const NoteEl = document.querySelector('.note');
+    expect(NoteEl.textContent).toEqual('This is another mock note')
+    done();
+  });
+
 })

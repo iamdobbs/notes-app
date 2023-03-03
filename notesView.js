@@ -42,10 +42,11 @@ class NotesView {
     this.client.createNote(note, (data) => {
       this.model.setNotes(data);
       this.displayNotes();
-    });
+    },
+      (error) => this.displayError(error));
   }
 
-  displayError = ()  => {
+  displayError = (error)  => {
     this.mainContainerEl.append('Oops, something went wrong!');
   }
 }

@@ -1,12 +1,16 @@
 class NotesClient {
-  loadNotes (callback) {
+  
+  loadNotes (callback, displayError) {
     fetch('http://localhost:3000/notes')
     .then(response => response.json())
     .then(data => 
-      callback(data));
+      callback(data))
+    .catch(error => {
+      displayError(error);
+    });
   }
-
-  createNote (note, callback) {
+  
+  createNote (note, callback, displayError) {
     const data = { content: note };
 
     fetch('http://localhost:3000/notes', {
@@ -18,8 +22,12 @@ class NotesClient {
     })
     .then((response) => response.json())
     .then((data) => 
-      callback(data));
-  }
-}
+      callback(data))
+      .catch(error => {
+        displayError(error);
+    });
+  }  
+}  
+
 
 module.exports = NotesClient;
