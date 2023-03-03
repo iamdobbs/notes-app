@@ -85,4 +85,13 @@ describe('Notes view', () => {
     expect(noteEl[0].textContent).toEqual('This is another POST mock note');
   });
 
+  it.only('can display an error message on the page', () => {
+    const model = new NotesModel();
+    const client = new NotesClient();
+    const view = new NotesView(model, client);
+    view.displayError();
+    const mainCont = document.querySelector('#main-container');
+    expect(mainCont.textContent).toContain('Oops, something went wrong!');
+  });
+
 })

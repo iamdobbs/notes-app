@@ -35,7 +35,7 @@ class NotesView {
     await this.client.loadNotes((data) => {
     this.model.setNotes(data);
     this.displayNotes();
-  })
+  });
   }
 
   addNewNote = (note) => {
@@ -43,6 +43,10 @@ class NotesView {
       this.model.setNotes(data);
       this.displayNotes();
     });
+  }
+
+  displayError = ()  => {
+    this.mainContainerEl.append('Oops, something went wrong!');
   }
 }
 
